@@ -1,6 +1,11 @@
 import { allow } from "joi";
 import { Column, DataType, Default, Model, PrimaryKey, Table } from "sequelize-typescript";
 
+export enum SongStatus {
+  AVAILABLE = 'AVAIABLE',
+  UNAVAILABLE = 'UNAVAILABLE'
+}
+
 @Table({
   tableName: 'song',
   timestamps: true
@@ -44,6 +49,14 @@ export class Song extends Model {
     allowNull: false
   })
   duration: string
+
+  
+  @Column({
+    type: DataType.ENUM(...Object.values(SongStatus)),
+    allowNull: false,
+    defaultValue: SongStatus.AVAILABLE
+  })
+  status: string
 
   @Column({
     type: DataType.DATE,
