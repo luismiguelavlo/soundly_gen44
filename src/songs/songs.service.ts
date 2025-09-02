@@ -4,6 +4,7 @@ import { UpdateSongDto } from './dto/update-song.dto';
 import { Sequelize } from 'sequelize-typescript';
 import { InjectModel } from '@nestjs/sequelize';
 import { Song, SongStatus } from './entities/song.entity';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class SongsService {
@@ -49,6 +50,17 @@ export class SongsService {
     }
 
     return song
+  }
+
+  async findSongByTitle(title: string){
+    return await this.songModel.findAll({
+      where: {
+        title: {
+          [Op.iLike]: `%${title}%`
+        },
+        status: SongStatus.AVAILABLE
+      }
+    })
   }
 
   async update(id: string, updateSongDto: UpdateSongDto) {

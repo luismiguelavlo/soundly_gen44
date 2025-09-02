@@ -1,8 +1,10 @@
 import { allow } from "joi";
-import { Column, DataType, Default, Model, PrimaryKey, Table } from "sequelize-typescript";
+import { Column, DataType, Default, ForeignKey, Model, PrimaryKey, Table } from "sequelize-typescript";
+import { Artist } from "src/artists/entities/artist.entity";
+import { Genre } from "src/genres/entities/genre.entity";
 
 export enum SongStatus {
-  AVAILABLE = 'AVAIABLE',
+  AVAILABLE = 'AVAILABLE',
   UNAVAILABLE = 'UNAVAILABLE'
 }
 
@@ -50,7 +52,6 @@ export class Song extends Model {
   })
   duration: string
 
-  
   @Column({
     type: DataType.ENUM(...Object.values(SongStatus)),
     allowNull: false,
@@ -63,4 +64,20 @@ export class Song extends Model {
     allowNull: false,
   })
   release_date: string
+
+  @ForeignKey(() => Artist)
+  @Column({
+    type: DataType.UUID,
+    allowNull: false,
+    field: 'artist_id'
+  })
+  artistId: string;
+
+  @ForeignKey(() => Genre)
+  @Column({
+    type: DataType.UUID,
+    allowNull: false,
+    field: 'genre_id'
+  })
+  genreId: string;
 }

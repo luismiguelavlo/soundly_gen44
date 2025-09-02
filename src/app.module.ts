@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { SongsModule } from './songs/songs.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { envs } from './config';
+import { ArtistsModule } from './artists/artists.module';
+import { GenresModule } from './genres/genres.module';
 
 @Module({
   imports: [
@@ -22,9 +24,11 @@ import { envs } from './config';
           rejectUnauthorized: false
         }
       }
-    })
+    }),
+    ArtistsModule,
+    GenresModule
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }

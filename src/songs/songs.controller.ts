@@ -21,6 +21,13 @@ export class SongsController {
   findOne(@Param('id') id: string) {
     return this.songsService.findOne(id);
   }
+  
+  @Get('title/:title')
+  findSongByTitle(
+    @Param('title') title: string,
+  ){
+    return this.songsService.findSongByTitle(title)
+  }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateSongDto: UpdateSongDto) {
