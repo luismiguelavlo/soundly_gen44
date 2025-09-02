@@ -16,7 +16,7 @@ export class ArtistsService {
   }
 
   async findOneWithSongs(id: string, startDate: string = '2010-01-01', endDate: string = '2025-01-01') {
-    return this.artistModel.findAll({
+    return this.artistModel.findByPk(id, {
       include: [
         {
           model: Song,
