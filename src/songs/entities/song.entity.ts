@@ -1,7 +1,9 @@
 import { allow } from "joi";
-import { Column, DataType, Default, ForeignKey, Model, PrimaryKey, Table } from "sequelize-typescript";
+import { BelongsToMany, Column, DataType, Default, ForeignKey, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
 import { Artist } from "src/artists/entities/artist.entity";
 import { Genre } from "src/genres/entities/genre.entity";
+import { PlaylistSong } from "src/play-lists/entities/play-list-song.entity";
+import { PlayList } from "src/play-lists/entities/play-list.entity";
 
 export enum SongStatus {
   AVAILABLE = 'AVAILABLE',
@@ -80,4 +82,7 @@ export class Song extends Model {
     field: 'genre_id'
   })
   genreId: string;
+
+  @BelongsToMany(() => PlayList, () => PlaylistSong)
+  playlists: PlayList[]
 }

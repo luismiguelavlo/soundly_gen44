@@ -4,6 +4,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { envs } from './config';
 import { ArtistsModule } from './artists/artists.module';
 import { GenresModule } from './genres/genres.module';
+import { PlayListsModule } from './play-lists/play-lists.module';
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import { GenresModule } from './genres/genres.module';
       }
     }),
     ArtistsModule,
-    GenresModule
+    GenresModule,
+    PlayListsModule
   ],
   controllers: [],
   providers: [],
