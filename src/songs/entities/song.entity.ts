@@ -1,5 +1,5 @@
 import { allow } from "joi";
-import { BelongsToMany, Column, DataType, Default, ForeignKey, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
+import { BelongsTo, BelongsToMany, Column, DataType, Default, ForeignKey, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
 import { Artist } from "src/artists/entities/artist.entity";
 import { Genre } from "src/genres/entities/genre.entity";
 import { PlaylistSong } from "src/play-lists/entities/play-list-song.entity";
@@ -82,6 +82,13 @@ export class Song extends Model {
     field: 'genre_id'
   })
   genreId: string;
+
+  @BelongsTo(() => Artist, 'artist_id')
+  artist: Artist
+
+  @BelongsTo(() => Genre, 'genre_id')
+  genre: Genre
+
 
   @BelongsToMany(() => PlayList, () => PlaylistSong)
   playlists: PlayList[]

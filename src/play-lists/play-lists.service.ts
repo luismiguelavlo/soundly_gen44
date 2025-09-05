@@ -39,11 +39,25 @@ export class PlayListsService {
         {
           model: Song,
           attributes: ['id', 'title', 'album', 'audio_url', 'cover_url', 'duration'],
-          through: { attributes: ['position'] }
-          //TODO: averiguar porque no funciona la relacion con el genre y arist
+          through: { attributes: ['position'] },
+          include: [
+            {
+              model: Artist,
+              attributes: ['id', 'name', 'image_url'],
+            },
+            {
+              model: Genre,
+              attributes: ['id', 'name'],
+            }
+          ]
         }
       ],
-      //TODO: order: [[Song, PlaylistSong, 'position', 'ASC']] averiguar porque falla
+      order: [[
+        { model: Song, as: 'songs' },
+        PlaylistSong,
+        'position',
+        'ASC'
+      ]]
     })
 
     if (!playList) {

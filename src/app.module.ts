@@ -5,6 +5,7 @@ import { envs } from './config';
 import { ArtistsModule } from './artists/artists.module';
 import { GenresModule } from './genres/genres.module';
 import { PlayListsModule } from './play-lists/play-lists.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import { PlayListsModule } from './play-lists/play-lists.module';
     }),
     ArtistsModule,
     GenresModule,
-    PlayListsModule
+    PlayListsModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],
