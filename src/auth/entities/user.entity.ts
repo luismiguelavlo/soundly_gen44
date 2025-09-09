@@ -1,5 +1,7 @@
 import { Column, Default, DataType, Model, PrimaryKey, Table } from "sequelize-typescript";
 
+type UserRole = 'ADMIN' | 'USER' | 'DEVELOPER'
+
 @Table({
   tableName: 'user',
   timestamps: true
@@ -38,4 +40,11 @@ export class User extends Model {
     field: 'avatar_url'
   })
   avatarUrl: string;
+
+  @Default(['USER'])
+  @Column({
+    type: DataType.ARRAY(DataType.ENUM('USER', 'ADMIN', 'DEVELOPER')),
+    allowNull: false
+  })
+  role: UserRole[]
 }

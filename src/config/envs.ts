@@ -8,6 +8,7 @@ interface EnvVar {
   DATABASE_NAME: string
   DATABASE_HOST: string
   DATABASE_PORT: number
+  JWT_SECRET: string
 }
 
 const envSchema = joi.object({
@@ -17,12 +18,13 @@ const envSchema = joi.object({
   DATABASE_NAME: joi.string().required(),
   DATABASE_HOST: joi.string().required(),
   DATABASE_PORT: joi.number().required(),
+  JWT_SECRET: joi.string().required(),
 })
-.unknown(true)
+  .unknown(true)
 
 const { error, value } = envSchema.validate({ ...process.env })
 
-if( error ) throw new Error(`Config validation error: ${error.message}`)
+if (error) throw new Error(`Config validation error: ${error.message}`)
 
 const envVars: EnvVar = value
 
@@ -33,4 +35,5 @@ export const envs = {
   DATABASE_NAME: envVars.DATABASE_NAME,
   DATABASE_HOST: envVars.DATABASE_HOST,
   DATABASE_PORT: envVars.DATABASE_PORT,
+  JWT_SECRET: envVars.JWT_SECRET,
 }

@@ -1,6 +1,21 @@
+-- ============================================
+-- SEED COMPLETO PARA SOUNDLY BACKEND
+-- ============================================
 
-TRUNCATE TABLE "song", "artist", "genre", "play_list", "play_list_song"
-RESTART IDENTITY CASCADE;
+-- Limpiar todas las tablas en el orden correcto para evitar violaciones de FK
+DELETE FROM play_list_song;
+DELETE FROM play_list;
+DELETE FROM song;
+DELETE FROM artist;
+DELETE FROM genre;
+DELETE FROM "user";
+
+-- ======================
+-- Usuarios
+-- ======================
+INSERT INTO "user" (id, name, email, password, avatar_url, role, "createdAt", "updatedAt") VALUES
+  ('550e8400-e29b-41d4-a716-446655440001', 'Admin User', 'admin@soundly.com', '$2b$10$hashedpassword', 'https://cdn-icons-png.flaticon.com/512/4874/4874892.png', ARRAY['ADMIN'], NOW(), NOW()),
+  ('550e8400-e29b-41d4-a716-446655440002', 'Test User', 'user@soundly.com', '$2b$10$hashedpassword', 'https://cdn-icons-png.flaticon.com/512/4874/4874892.png', ARRAY['USER'], NOW(), NOW());
 
 -- ======================
 -- Géneros musicales
@@ -49,12 +64,12 @@ VALUES
 -- ======================
 -- Playlists
 -- ======================
-INSERT INTO play_list (id, name, description, image_url, title, "createdAt", "updatedAt") VALUES
-  ('f7898a75-4b90-45f5-bc50-c9c43f9e64f5', 'Clásicos del Rock', 'Las mejores canciones de rock de todos los tiempos', 'https://cdn.example.com/playlists/rock-classics.jpg', 'Rock Classics', NOW(), NOW()),
-  ('eda84999-d1cc-4d99-9da4-d31c4e119456', 'Pop Hits 2024', 'Los éxitos más populares del momento', 'https://cdn.example.com/playlists/pop-hits.jpg', 'Pop Hits', NOW(), NOW()),
-  ('3cb73b4b-acf4-45e3-b147-26b08030873b', 'Jazz Lounge', 'Música jazz relajante para trabajar o estudiar', 'https://cdn.example.com/playlists/jazz-lounge.jpg', 'Jazz Lounge', NOW(), NOW()),
-  ('588f3023-fb16-42da-bcbd-7907de5df071', 'Reggaeton Party', 'Las mejores canciones para fiesta y baile', 'https://cdn.example.com/playlists/reggaeton-party.jpg', 'Reggaeton Party', NOW(), NOW()),
-  ('53c2e359-2b96-477a-82f7-5d750647b5d5', 'Mixed Vibes', 'Una mezcla ecléctica de diferentes géneros musicales', 'https://cdn.example.com/playlists/mixed-vibes.jpg', 'Mixed Vibes', NOW(), NOW());
+INSERT INTO play_list (id, name, description, image_url, "createdAt", "updatedAt") VALUES
+  ('f7898a75-4b90-45f5-bc50-c9c43f9e64f5', 'Clásicos del Rock', 'Las mejores canciones de rock de todos los tiempos', 'https://cdn.example.com/playlists/rock-classics.jpg', NOW(), NOW()),
+  ('eda84999-d1cc-4d99-9da4-d31c4e119456', 'Pop Hits 2024', 'Los éxitos más populares del momento', 'https://cdn.example.com/playlists/pop-hits.jpg', NOW(), NOW()),
+  ('3cb73b4b-acf4-45e3-b147-26b08030873b', 'Jazz Lounge', 'Música jazz relajante para trabajar o estudiar', 'https://cdn.example.com/playlists/jazz-lounge.jpg', NOW(), NOW()),
+  ('588f3023-fb16-42da-bcbd-7907de5df071', 'Reggaeton Party', 'Las mejores canciones para fiesta y baile', 'https://cdn.example.com/playlists/reggaeton-party.jpg', NOW(), NOW()),
+  ('53c2e359-2b96-477a-82f7-5d750647b5d5', 'Mixed Vibes', 'Una mezcla ecléctica de diferentes géneros musicales', 'https://cdn.example.com/playlists/mixed-vibes.jpg', NOW(), NOW());
 
 -- ======================
 -- Relaciones Playlist-Song
@@ -84,3 +99,13 @@ INSERT INTO play_list_song (playlist_id, song_id, position, "createdAt", "update
   ('53c2e359-2b96-477a-82f7-5d750647b5d5', '0d3f5643-d168-439e-90b7-6cdf4121d7a2', 2, NOW(), NOW()),
   ('53c2e359-2b96-477a-82f7-5d750647b5d5', 'f23aa42a-afd5-4c06-9316-117ef90bc5ee', 3, NOW(), NOW()),
   ('53c2e359-2b96-477a-82f7-5d750647b5d5', '36f56451-2373-4774-a7dc-b99cc4e600b2', 4, NOW(), NOW());
+
+-- ======================
+-- Verificaciones finales
+-- ======================
+SELECT 'Usuarios insertados:' as status, COUNT(*) as total FROM "user";
+SELECT 'Géneros insertados:' as status, COUNT(*) as total FROM genre;
+SELECT 'Artistas insertados:' as status, COUNT(*) as total FROM artist;
+SELECT 'Canciones insertadas:' as status, COUNT(*) as total FROM song;
+SELECT 'Playlists insertadas:' as status, COUNT(*) as total FROM play_list;
+SELECT 'Relaciones playlist-song:' as status, COUNT(*) as total FROM play_list_song;
