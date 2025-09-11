@@ -32,7 +32,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException('Token not valid')
     }
 
-    return user;
+    return {
+      ...user.dataValues,
+    }
   }
 }
 

@@ -6,6 +6,8 @@ import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt'
 import { JwtPayload } from './interfaces/jwt-payload';
 import { JwtService } from '@nestjs/jwt';
+import { RESPONSE } from './constants/responses-messages';
+
 
 @Injectable()
 export class AuthService {
@@ -46,11 +48,11 @@ export class AuthService {
     })
 
     if (!user) {
-      throw new UnauthorizedException('Credentials are not valid')
+      throw new UnauthorizedException(RESPONSE.CREDENTIALS_ARE_NOT_VALID)
     }
 
     if (!bcrypt.compareSync(password, user.dataValues.password)) {
-      throw new UnauthorizedException('Credentials are not valid')
+      throw new UnauthorizedException(RESPONSE.CREDENTIALS_ARE_NOT_VALID)
     }
 
     return {
